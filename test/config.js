@@ -1,12 +1,23 @@
 import request from 'supertest';
-import app from './app';
+import express from 'express';
 
-describe('Session Middleware', () => {
-  it('should set the httpOnly flag for session cookies', async () => {
-    const response = await request(app).get('/example');
-    const setCookieHeader = response.headers['set-cookie'];
+const app = express();
 
-    expect(setCookieHeader).toBeDefined();
-    expect(setCookieHeader).toContain('HttpOnly');
-  });
+app.use(expressSession({
+    secret: 'mysecret',
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+        secure: true,
+        httpOnly: true,
+        sameSite: 'strict',
+        expires: new Date(Date.now() + 3600000) // Set expiration date for persistent cookies
+    }
+}));
+
+describe('Security Test', () => {
+    it('should return "I\'m in danger!"', async () => {
+        const response = await request(app).get('/example');
+        expect(response.text).toBe("I'm in danger!");
+    });
 });
