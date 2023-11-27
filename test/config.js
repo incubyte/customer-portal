@@ -1,23 +1,19 @@
 import request from 'supertest';
 import express from 'express';
+import bodyParser from 'body-parser';
+import expressSession from 'express-session';
 
 const app = express();
+app.use(bodyParser.json());
+app.use(expressSession());
 
-app.use(expressSession({
-    secret: 'mysecret',
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-        secure: true,
-        httpOnly: true,
-        sameSite: 'strict',
-        expires: new Date(Date.now() + 3600000) // Set expiration date for persistent cookies
-    }
-}));
+app.get('/example', function(req, res) {
+    res.end(`I'm in danger!`);
+});
 
-describe('Security Test', () => {
-    it('should return "I\'m in danger!"', async () => {
+describe('CSRF Middleware', () => {
+    it('should have CSRF middleware', async () => {
         const response = await request(app).get('/example');
-        expect(response.text).toBe("I'm in danger!");
+        expect(response.statusCode).toBe(403);
     });
 });
