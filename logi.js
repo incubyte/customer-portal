@@ -6,11 +6,13 @@ const app = express();
 const bodyParser = require('body-parser');
 const urlencoded = bodyParser.urlencoded;
 const staticServer = express.static;
+const csurf = require('csurf');
 
 app.use(urlencoded({ extended: true }));
 app.use('/', staticServer('./static/'));
+app.use(csurf());
 
-app.post('/logi', function(req, res) {
+app.post('/login', function(req, res) {
     // We trust our users, every login will be successful!
     const username = req.body.username;
     const password = req.body.password;
