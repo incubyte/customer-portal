@@ -6,12 +6,13 @@ const app = express();
 const bodyParser = require('body-parser');
 const helmet = require('helmet');
 const expressSession = require('express-session');
-const csurf = require('csurf');
 
 app.use(helmet());
 app.use(bodyParser.json());
-app.use(expressSession());
-app.use(csurf());
+app.use(expressSession({
+    name: 'my-session-cookie',
+    secret: 'my-secret-key',
+}));
 
 app.get('/example', function(req, res) {
     res.end(`I'm in danger!`);
