@@ -12,9 +12,7 @@ app.use(bodyParser.json());
 app.use(expressSession({
     name: 'my-session-cookie',
     secret: 'my-secret-key',
-    cookie: {
-        httpOnly: true
-    }
+    path: '/',
 }));
 
 app.get('/example', function(req, res) {
