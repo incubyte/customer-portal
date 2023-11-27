@@ -10,8 +10,10 @@ const session = require('express-session')
 
 app.use(urlencoded({ extended: true }));
 app.use('/', staticServer('./static/'));
-app.use(session({secret: 'secret'}));
 
+// Use environment variable or secure vault to store the session secret
+const sessionSecret = process.env.SESSION_SECRET || 'secret';
+app.use(session({ secret: sessionSecret }));
 
 const users = {
     'user1': 'password1',
