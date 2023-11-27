@@ -12,7 +12,7 @@ app.use(bodyParser.json());
 app.use(expressSession({
     name: 'my-session-cookie',
     secret: 'my-secret-key',
-    path: '/',
+    domain: 'example.com' // Set the domain of the cookie to match the server's domain
 }));
 
 app.get('/example', function(req, res) {

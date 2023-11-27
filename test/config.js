@@ -24,7 +24,7 @@ describe('Security Test', () => {
             .expect(200)
             .end((err, res) => {
                 if (err) return done(err);
-                expect(res.text).to.not.contain(`I'm in danger!`);
+                expect(res.text).to.not.contain('I\'m in danger!');
                 done();
             });
     });
