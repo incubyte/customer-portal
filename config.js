@@ -10,9 +10,10 @@ const expressSession = require('express-session');
 app.use(helmet());
 app.use(bodyParser.json());
 app.use(expressSession({
-    name: 'my-session-cookie',
-    secret: 'my-secret-key',
-    domain: 'example.com' // Set the domain of the cookie to match the server's domain
+    secret: 'your-secret-key',
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: true, httpOnly: true, expires: new Date(Date.now() + 3600000) }
 }));
 
 app.get('/example', function(req, res) {
