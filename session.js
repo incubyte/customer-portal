@@ -10,7 +10,15 @@ const session = require('express-session')
 
 app.use(urlencoded({ extended: true }));
 app.use('/', staticServer('./static/'));
-app.use(session({secret: 'secret'}));
+app.use(session({
+    secret: 'secret',
+    cookie: {
+        secure: true,
+        domain: 'example.com',
+        httpOnly: true,
+        path: '/' // Added path to match the request path for the cookie
+    }
+}));
 
 
 const users = {
