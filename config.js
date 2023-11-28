@@ -7,10 +7,12 @@ const bodyParser = require('body-parser');
 const helmet = require('helmet');
 const expressSession = require('express-session');
 
-
-// app.use(helmet());
+app.use(helmet());
 app.use(bodyParser.json());
-app.use(expressSession());
+app.use(expressSession({
+    path: '/',
+}));
+
 app.get('/example', function(req, res) {
     res.end(`I'm in danger!`);
 });
