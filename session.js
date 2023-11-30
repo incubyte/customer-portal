@@ -13,7 +13,8 @@ app.use('/', staticServer('./static/'));
 app.use(session({
     secret: 'secret',
     cookie: {
-        secure: true
+        secure: true,
+        httpOnly: true // Added httpOnly flag to protect against cross-site scripting attacks
     }
 }));
 
