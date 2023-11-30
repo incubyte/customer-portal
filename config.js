@@ -13,7 +13,8 @@ app.use(expressSession({
     name: 'my-session-cookie',
     secret: 'my-secret-key',
     cookie: {
-        secure: true
+        secure: true,
+        domain: 'example.com' // Set the domain of the cookie to match the server's domain
     }
 }));
 
