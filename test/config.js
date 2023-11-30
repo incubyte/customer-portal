@@ -1,9 +1,11 @@
-const request = require('supertest');
-const app = require('./app');
+import request from 'supertest';
+import app from './app';
 
-describe('Session Cookie Test', () => {
-  it('should not use the default session cookie name', async () => {
+describe('Session Middleware', () => {
+  it('should set secure flag for session cookie', async () => {
     const response = await request(app).get('/example');
-    expect(response.headers['set-cookie']).not.toContain('connect.sid');
+    const sessionCookie = response.headers['set-cookie'][0];
+
+    expect(sessionCookie).toMatch(/Secure/);
   });
 });
