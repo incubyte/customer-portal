@@ -10,7 +10,7 @@ const session = require('express-session')
 
 app.use(urlencoded({ extended: true }));
 app.use('/', staticServer('./static/'));
-app.use(session({secret: 'secret'}));
+app.use(session({secret: process.env.SESSION_SECRET}));
 
 
 const users = {
