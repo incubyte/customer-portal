@@ -6,8 +6,10 @@ const db = new sqlite.Database(':memory:');
 db.run('CREATE TABLE comments(ts TIMESTAMP DEFAULT CURRENT_TIMESTAMP, comment TEXT)');
 
 const express = require('express');
+const csrf = require('csurf'); // Import csurf middleware
 const app = express();
 app.use(express.urlencoded({extended: true}));
+app.use(csrf()); // Use csurf middleware
 
 app.get('/xss', function (req, res) {
     db.all('SELECT comment FROM comments ORDER BY ts DESC', [], function(err, rows) {
@@ -18,6 +20,7 @@ app.get('/xss', function (req, res) {
                 How is DevConf.US so far?<br/>
                 <form action="/xss" method="post">
                     <input name="comment" type="text">&nbsp;<input type="submit">
+                    <input type="hidden" name="_csrf" value="${req.csrfToken()}"> // Add CSRF token as a hidden input field
                 </form>
                 <br/>
                 Here's what others are saying:<br/>
