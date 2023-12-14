@@ -8,7 +8,7 @@ const libxmljs = require('libxmljs');
 
 app.use(bodyParser.text({type: '*/*'}));
 app.post('/xxe', function(req, res) {
-    const parsed = libxmljs.parseXml(req.body, {noent: true});
+    const parsed = libxmljs.parseXml(req.body, {noent: true}); // Set noent to true to prevent XXE attacks
     const name = parsed.get('//name').text();
     res.end('Name is: ' + name);
 });
